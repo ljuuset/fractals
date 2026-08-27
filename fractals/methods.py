@@ -1,16 +1,13 @@
 def newton(f, fp, Z):
+    return Z - f(Z) / fp(Z)
 
-    return Z - f(Z)/fp(Z)
 
 def ifj(f, fp, Z):
+    u = f(Z) / fp(Z)
+    h = (fp(Z - (2 / 3) * u) - fp(Z)) / fp(Z)
+    return Z - u + (3 / 4) * u * h * (1 - (3 / 2) * h)
 
-    u = lambda x: f(x) / fp(x)
-    h = lambda x: (fp(x - (2/3)*u(x)) - fp(x))/fp(x)
 
-    return Z - u(Z) + (3/4)*u(Z)*h(Z)*(1 - (3/2)*h(Z))
-
-def steffensen(f, Z):
-
-    g = lambda x: (f(x + f(x)) - f(x))/f(x)
-
-    return Z - f(Z)/g(Z)
+def steffensen(f, _, Z):
+    g = (f(Z + f(Z)) - f(Z)) / f(Z)
+    return Z - f(Z) / g
