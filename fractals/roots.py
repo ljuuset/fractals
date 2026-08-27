@@ -21,7 +21,7 @@ cases = [
     }
     ]
 
-def find_roots():
+def find_roots(cases):
 
     for case in cases:
 
