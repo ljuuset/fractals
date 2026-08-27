@@ -1,14 +1,26 @@
+import matplotlib
+matplotlib.use("Qt5Agg")
+import matplotlib
+
+try:
+    matplotlib.use("QtAgg")
+except Exception:
+    try:
+        matplotlib.use("TkAgg")
+    except Exception:
+        matplotlib.use("Agg")
+
 import matplotlib.pyplot as plt
 import numpy as np
 
-from methods import newton
-from roots import cases, find_roots
+from .methods import newton
+from .roots import cases, find_roots
 
 resolution = 1000
 maxiter = 100
 tol = 1e-15
 
-def render_fractal(case, method=newton, resolution=resolution, maxiter=maxiter, tol=tol):
+def render_fractal(case, method=newton, resolution=1000, maxiter=100, tol=1e-12):
 
     roots = case["roots"]
 
@@ -48,8 +60,12 @@ def render_fractal(case, method=newton, resolution=resolution, maxiter=maxiter, 
         Ik = (root_idx == k) & (~F)
         C[Ik] = (k - 1) + (1 - M[Ik]/iter_count)
 
-    plt.imshow(C, extent = [-1, 1, -1, 1], origin = "lower"
+    plt.imshow(C, extent = [-1, 1, -1, 1], origin = "lower",
                cmap = "hsv", interpolation = "nearest")
     plt.colorbar()
-    plt.title(f"{case["name"]} via {method.__name__}")
-    plt.show
+    plt.title(f"{case['name']} via {method.__name__}")
+
+    try:
+        plt.show()
+    except Exception:
+        plt.savefig(f"{case['name']}.png")

@@ -9,7 +9,7 @@ def ifj(f, fp, Z):
 
     return Z - u(Z) + (3/4)*u(Z)*h(Z)*(1 - (3/2)*h(Z))
 
-def steffensen(f, fp, Z):
+def steffensen(f, Z):
 
     g = lambda x: (f(x + f(x)) - f(x))/f(x)
 
